@@ -13,16 +13,13 @@ HarvesterStatus = {
 	scriptName = "harvesterstatus";
 };
 
--- px are in targetSize for 1920x1080
+-- Transforms the given pixel value to the correct value for the game engine
 local function pxToNormal(px, dimension)
-	local ret;
 	if dimension == 'x' then
-		ret = (px / 1920);
+		return (px / 1920);
 	else
-		ret = (px / 1080);
+		return (px / 1080);
 	end;
-
-	return ret;
 end;
 
 local modItem = ModsUtil.findModItemByModName(HarvesterStatus.modName);
@@ -30,8 +27,10 @@ if modItem and modItem.version and modItem.author then
 	HarvesterStatus.version, HarvesterStatus.author = modItem.version, modItem.author;
 end;
 
+-- main entry into the game...
 addModEventListener(HarvesterStatus);
 
+-- called after/while (?) the map is/was loaded
 function HarvesterStatus:loadMap()
 	if self.initialized then
 		return;
