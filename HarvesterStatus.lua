@@ -32,14 +32,6 @@ elseif g_screenWidth < 1920 then
 	sizeRatio = max((1920 / g_screenWidth) * .75, 1);
 end;
 
-local function getFullPx(n, dimension)
-	if dimension == 'x' then
-		return round(n * g_screenWidth) / g_screenWidth;
-	else
-		return round(n * g_screenHeight) / g_screenHeight;
-	end;
-end;
-
 -- px are in targetSize for 1920x1080
 local function pxToNormal(px, dimension, fullPixel)
 	local ret;
@@ -47,9 +39,6 @@ local function pxToNormal(px, dimension, fullPixel)
 		ret = (px / 1920) * sizeRatio;
 	else
 		ret = (px / 1080) * sizeRatio * aspectRatioRatio;
-	end;
-	if fullPixel == nil or fullPixel then
-		ret = getFullPx(ret, dimension);
 	end;
 
 	return ret;
@@ -76,7 +65,7 @@ function HarvesterStatus:loadMap()
 	};
 	
 	local horizontalMargin = pxToNormal(16, 'x');
-	self.gui.x1 = getFullPx(1 - self.gui.width - horizontalMargin, 'x');
+	self.gui.x1 = 1 - self.gui.width - horizontalMargin;
 	self.gui.x2 = self.gui.x1 + self.gui.width;
 	self.gui.y1 = pxToNormal(390, 'y');
 	self.gui.y2 = self.gui.y1 + self.gui.height;
