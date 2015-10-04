@@ -22,6 +22,10 @@ local function pxToNormal(px, dimension)
 	end;
 end;
 
+function HarvesterStatus:toRGBA(r, g, b, a)
+	return {r/255, g/255, b/255, a};
+end;
+
 local modItem = ModsUtil.findModItemByModName(HarvesterStatus.modName);
 if modItem and modItem.version and modItem.author then
 	HarvesterStatus.version, HarvesterStatus.author = modItem.version, modItem.author;
@@ -42,6 +46,8 @@ function HarvesterStatus:loadMap()
 	self.gui = {
 		width = pxToNormal(200, 'x');
 		height = pxToNormal(100, 'y');
+    horizontalPadding = pxToNormal(5, 'x');
+    fontSize = pxToNormal(12, 'y');
 	};
 	
 	local horizontalMargin = pxToNormal(16, 'x');
@@ -49,12 +55,17 @@ function HarvesterStatus:loadMap()
 	self.gui.x2 = self.gui.x1 + self.gui.width;
 	self.gui.y1 = pxToNormal(390, 'y');
 	self.gui.y2 = self.gui.y1 + self.gui.height;
+  
+  self.contentMinX = self.gui.x1 + self.gui.horizontalPadding;
+  
+  self.gui.lines = {};
+  self.gui.lines[0] = self.gui.y1 + pxToNormal(50, 'y');
 	
 	local gfxPath = Utils.getFilename('white.png', HarvesterStatus.imgDir);
 	self.gui.background = Overlay:new('hsBackground', gfxPath, self.gui.x1, self.gui.y1, self.gui.width, self.gui.height);
 	
 	self.initialized = true;
-	print(('## HarvesterStatus v%s by %s loaded'):format(HarvesterStatus.version, HarvesterStatus.author));
+	print(('>>> HarvesterStatus v%s by %s loaded...'):format(HarvesterStatus.version, HarvesterStatus.author));
 end;
 
 function HarvesterStatus:deleteMap()
@@ -76,8 +87,11 @@ function HarvesterStatus:update()
 end;
 
 function HarvesterStatus:draw()
-	local g = self.gui;
+  local g = self.gui;
+  
 	g.background:render();
+	setTextColor(self:toRGBA(0, 0, 0, 1.0));
+	renderText(g.contentMinX, g.lines[0], g.fontSize, 'TEST');
 end;
 
 function HarvesterStatus:getKeyIdOfModifier(binding)
