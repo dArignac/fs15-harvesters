@@ -13,16 +13,13 @@ HarvesterStatus = {
 	scriptName = "harvesterstatus";
 };
 
-local targetAspectRatio = 16/9;
-local aspectRatioRatio = g_screenAspectRatio / targetAspectRatio;
-
 -- px are in targetSize for 1920x1080
 local function pxToNormal(px, dimension)
 	local ret;
 	if dimension == 'x' then
 		ret = (px / 1920);
 	else
-		ret = (px / 1080) * aspectRatioRatio;
+		ret = (px / 1080);
 	end;
 
 	return ret;
