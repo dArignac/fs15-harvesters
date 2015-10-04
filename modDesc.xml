@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="21">
+	<author>darignac</author>
+    <version>1</version>
+    <title>
+        <en><![CDATA[Harvester Status]]></en>
+        <de><![CDATA[Mähdrescher Status]]></de>
+    </title>
+    <description>
+        <en><![CDATA[Shows crop status of harvesters]]></en>
+        <de><![CDATA[Zeigt den Ernte Status der Mähdrescher an]]></de>
+    </description>
+    <iconFilename>settings48.png</iconFilename>
+    <multiplayer supported="true"/>
+    <extraSourceFiles>
+        <sourceFile filename="HarvesterStatus.lua" />
+    </extraSourceFiles>
+	<l10n>
+		<text name="HARVESTER_STATUS_HUD">
+			<en><![CDATA[Harvester Status]]></en>
+			<de><![CDATA[Mähdrescher Status]]></de>
+		</text>
+		<text name="HARVESTER_STATUS_HUD_SHOW">
+			<en><![CDATA[Show Harvester Status]]></en>
+			<de><![CDATA[Mähdrescher Status anzeigen]]></de>
+		</text>
+	</l10n>
+	<inputBindings>
+        <input name="HARVESTER_STATUS_HUD" key1="KEY_lalt KEY_h" />
+    </inputBindings>
+</modDesc>
