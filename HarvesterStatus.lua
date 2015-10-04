@@ -13,32 +13,16 @@ HarvesterStatus = {
 	scriptName = "harvesterstatus";
 };
 
-local abs, ceil, floor, max, min, pow = math.abs, math.ceil, math.floor, math.max, math.min, math.pow;
-
-local function round(n, precision)
-	if precision and precision > 0 then
-		return floor((n * pow(10, precision)) + 0.5) / pow(10, precision);
-	end;
-	return floor(n + 0.5);
-end;
-
 local targetAspectRatio = 16/9;
 local aspectRatioRatio = g_screenAspectRatio / targetAspectRatio;
-local sizeRatio = 1;
-
-if g_screenWidth > 1920 then
-	sizeRatio = 1920 / g_screenWidth;
-elseif g_screenWidth < 1920 then
-	sizeRatio = max((1920 / g_screenWidth) * .75, 1);
-end;
 
 -- px are in targetSize for 1920x1080
-local function pxToNormal(px, dimension, fullPixel)
+local function pxToNormal(px, dimension)
 	local ret;
 	if dimension == 'x' then
-		ret = (px / 1920) * sizeRatio;
+		ret = (px / 1920);
 	else
-		ret = (px / 1080) * sizeRatio * aspectRatioRatio;
+		ret = (px / 1080) * aspectRatioRatio;
 	end;
 
 	return ret;
