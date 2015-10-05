@@ -46,8 +46,8 @@ function HarvesterStatus:loadMap()
 	self.gui = {
 		width = pxToNormal(200, 'x');
 		height = pxToNormal(100, 'y');
-    horizontalPadding = pxToNormal(5, 'x');
-    fontSize = pxToNormal(12, 'y');
+		horizontalPadding = pxToNormal(5, 'x');
+		fontSize = pxToNormal(14, 'y');
 	};
 	
 	local horizontalMargin = pxToNormal(16, 'x');
@@ -55,11 +55,6 @@ function HarvesterStatus:loadMap()
 	self.gui.x2 = self.gui.x1 + self.gui.width;
 	self.gui.y1 = pxToNormal(390, 'y');
 	self.gui.y2 = self.gui.y1 + self.gui.height;
-  
-  self.contentMinX = self.gui.x1 + self.gui.horizontalPadding;
-  
-  self.gui.lines = {};
-  self.gui.lines[0] = self.gui.y1 + pxToNormal(50, 'y');
 	
 	local gfxPath = Utils.getFilename('white.png', HarvesterStatus.imgDir);
 	self.gui.background = Overlay:new('hsBackground', gfxPath, self.gui.x1, self.gui.y1, self.gui.width, self.gui.height);
@@ -74,8 +69,8 @@ end;
 
 function HarvesterStatus:update()
 	if g_currentMission.paused or g_gui.currentGui ~= nil then
-    return;
-  end;
+		return;
+	end;
 
 	if InputBinding.hasEvent(InputBinding.HARVESTER_STATUS_HUD) then
 		self:setHudState(self:loopNumberSequence(self.gui.hudState + 1, HarvesterStatus.HUDSTATE_INTERACTIVE, HarvesterStatus.HUDSTATE_CLOSED));
@@ -86,12 +81,29 @@ function HarvesterStatus:update()
 	end;
 end;
 
+-- TODO: this is called over and over again, there needs to be some break condition
 function HarvesterStatus:draw()
-  local g = self.gui;
-  
+	local g = self.gui;
+	
+	-- render background
 	g.background:render();
-	setTextColor(self:toRGBA(0, 0, 0, 1.0));
-	renderText(g.contentMinX, g.lines[0], g.fontSize, 'TEST');
+	
+	-- render some text
+	setTextColor(unpack(self:toRGBA(1, 1, 1, 1.0)));
+	renderText(g.x1 + g.horizontalPadding, g.y1 + pxToNormal(70, 'y'), g.fontSize, 'XXXXXXXXXXXXXXX');
+	
+	-- this slows down the game as it is called over and over again, see above. have to fix display of the mod gui first
+--	for idx, vehicle in pairs(g_currentMission.vehicles) do
+		-- mower is not the right type!
+--		if vehicle['typeName'] == 'mower_animated' then
+--			for a, b in pairs(vehicle) do
+--				print(('>>> %s: %s'):format(a, b));
+--			end;
+--		end;
+--		for a, b in pairs(vehicle) do
+--			print(('>>> %s: %s'):format(a, b));
+--		end;
+	end;
 end;
 
 function HarvesterStatus:getKeyIdOfModifier(binding)
